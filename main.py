@@ -12,7 +12,7 @@ from loguru import logger
 
 from dotenv import load_dotenv
 
-from database import prepare_db, get_strictness_level, set_strictness_level
+from database import prepare_db, get_strictness_level, set_strictness_level, add_chat, add_deleted
 
 load_dotenv()
 
@@ -83,6 +83,7 @@ async def start_command(message: Message):
 @dp.my_chat_member()
 async def my_chat_member_handler(event: ChatMemberUpdated):
     if event.old_chat_member.status in ['left', 'kicked', 'restricted'] and event.new_chat_member.status in ['member', 'administrator']:
+        await add_chat(event.chat.id)
         await event.answer('Спасибо, что добавили меня в чат. Теперь я буду помогать с удалением сообщений от спам ботов.\nВы можете изменить строгость бота с помощью /strictness.\nНе забудьте дать мне админку с правом на удаление сообщений, если ещё этого не сделали.')
 
 
@@ -116,6 +117,7 @@ async def strictness_command(message: Message):
 async def text_message_handler(message: Message):
     if message.chat.type == 'private':
         return
+    await add_chat(message.chat.id)
     strictness_level = await get_strictness_level(message.chat.id)
     if message.reply_to_message is None:
         return
@@ -126,16 +128,22 @@ async def text_message_handler(message: Message):
     diff = ans_time - orig_time
     if diff.total_seconds() > SECONDS_TO_DELETE:
         return
-    bio = (await bot.get_chat(message.from_user.id)).bio
+    if message.sender_chat is None:
+        bio = (await bot.get_chat(message.from_user.id)).bio
+        name = message.from_user.full_name
+    else:
+        bio = message.sender_chat.bio
+        name = message.sender_chat.title
     spam_probability = spam_bot_probability(
-        message.from_user.full_name,
+        name,
         bio or '',
         message.text,
         round(diff.total_seconds())
     )
-    logger.info(f'Probability: {spam_probability}')
-    if spam_probability > strictness_level / 100:
+    logger.info(f'Probability: {round(spam_probability * 100)}')
+    if round(spam_probability * 100) >= strictness_level:
         await message.delete()
+        await add_deleted(message.chat.id)
 
 
 async def main():
