@@ -110,6 +110,8 @@ async def strictness_command(message: Message):
         if member.status != ChatMemberStatus.ADMINISTRATOR or not member.can_delete_messages:
             await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
             return
+        logger.info(f'Admin: {member.status}')
+        logger.info(f'Can delete messages: {member.can_delete_messages}')
     await set_strictness_level(message.chat.id, strictness_level)
     await message.reply(f'Строгость в чате установлена на {strictness_level}.')
 
