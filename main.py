@@ -76,6 +76,12 @@ def spam_bot_probability(nickname: str, bio: str, comment_text: str, time_diff_s
     return min(probability, 1.0)
 
 
+async def delete_after(*messages: Message, seconds: int = 10):
+    await asyncio.sleep(seconds)
+    for msg in messages:
+        await msg.delete()
+
+
 @dp.message(Command('start'))
 async def start_command(message: Message):
     await message.answer('Привет!\nДобавь меня в чат своего канала и я буду удалять сообщения спам ботов.')
@@ -91,32 +97,38 @@ async def my_chat_member_handler(event: ChatMemberUpdated):
 @dp.message(Command('strictness'))
 async def strictness_command(message: Message):
     if message.chat.type == 'private':
-        await message.reply('Строгость не может быть установлена в личном чате.')
+        tmsg = await message.reply('Строгость не может быть установлена в личном чате.')
+        await delete_after(message, tmsg)
         return
     args = message.text.split(' ')
     if len(args) != 2:
         strictness_level = await get_strictness_level(message.chat.id)
-        await message.reply(f'Текущая строгость в чате: {strictness_level}.\nЧем ниже число, тем чувствительнее бот.\nСтрогость можно изменить командой: /strictness <10-100>.')
+        tmsg = await message.reply(f'Текущая строгость в чате: {strictness_level}.\nЧем ниже число, тем чувствительнее бот.\nСтрогость можно изменить командой: /strictness <10-100>.')
+        await delete_after(message, tmsg)
         return
     try:
         strictness_level = int(args[1])
         if strictness_level < 10 or strictness_level > 100:
             raise ValueError
     except:
-        await message.reply('Правильное использование: /strictness <10-100>.')
+        tmsg = await message.reply('Правильное использование: /strictness <10-100>.')
+        await delete_after(message, tmsg)
         return
     if message.sender_chat is not None and message.sender_chat.id != message.chat.id:
-        await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
+        tmsg = await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
+        await delete_after(message, tmsg)
         logger.info(f'Sender chat: {message.sender_chat.id}')
         return
     member = await bot.get_chat_member(message.chat.id, message.from_user.id)
     if member.status != ChatMemberStatus.ADMINISTRATOR or not member.can_delete_messages:
-        await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
+        tmsg = await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
+        await delete_after(message, tmsg)
         return
     logger.info(f'Admin: {member.status}')
     logger.info(f'Can delete messages: {member.can_delete_messages}')
     await set_strictness_level(message.chat.id, strictness_level)
-    await message.reply(f'Строгость в чате установлена на {strictness_level}.')
+    tmsg = await message.reply(f'Строгость в чате установлена на {strictness_level}.')
+    await delete_after(message, tmsg)
 
 
 @dp.message(F.text)
