@@ -30,7 +30,8 @@ SPAM_KEYWORDS = [
     'горящ', 'промо', 'распродаж', 'цена', 'рекомендуем',
     'канал', 'фулл', 'работа', 'подработка', 'зарпл',
     'оформ', 'арбитраж', 'подарок', 'отзывы', 'оплата',
-    'прогнозы', 'ставки', '18+', 'блог',
+    'прогнозы', 'ставки', '18+', 'блог', 'детское', 'порно',
+    'в проф'
 ]
 
 EMOJI_PATTERNS = [r'↑', r'👆', r'🔥', r'💥', r'🤑', r'👇', r'❗', r'⚠']
@@ -121,7 +122,11 @@ async def strictness_command(message: Message):
         return
     member = await bot.get_chat_member(message.chat.id, message.from_user.id)
     logger.info(f'Admin: {member.status}')
-    logger.info(f'Can delete messages: {member.can_delete_messages}')
+    (
+        logger.info(f'Can delete messages: {member.can_delete_messages}')
+        if member.status != ChatMemberStatus.CREATOR
+        else logger.info(f'Can delete messages: True (owner)')
+    )
     if member.status != ChatMemberStatus.CREATOR and (member.status not in ChatMemberStatus.ADMINISTRATOR or not member.can_delete_messages):
         tmsg = await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
         await delete_after(message, tmsg)
