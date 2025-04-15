@@ -41,7 +41,7 @@ EMOJI_PATTERNS = [r'↑', r'👆', r'🔥', r'💥', r'🤑', r'👇', r'❗', r
 def spam_bot_probability(nickname: str, bio: str, comment_text: str, time_diff_seconds: int):
     probability = 0.0
 
-    bio = bio.lower()
+    bio = f'{nickname}: {bio}'.lower()
 
     bio_keywords = sum(1 for word in SPAM_KEYWORDS if word in bio)
     probability += min(0.3, bio_keywords * 0.1)

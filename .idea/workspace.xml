@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c464aa44-d74a-4e3a-a686-f3ad54e18ae2" name="Changes" comment="Fixed owner rights 2">
+    <list default="true" id="c464aa44-d74a-4e3a-a686-f3ad54e18ae2" name="Changes" comment="Added new keywords">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -156,7 +156,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744738736283</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Added new keywords">
+      <option name="closed" value="true" />
+      <created>1744739008762</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744739008762</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -169,6 +177,7 @@
     <MESSAGE value="Pass bots, i.e. @GroupHelpBot or @Carrot_ChatBot" />
     <MESSAGE value="Fixed owner rights" />
     <MESSAGE value="Fixed owner rights 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed owner rights 2" />
+    <MESSAGE value="Added new keywords" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added new keywords" />
   </component>
 </project>
