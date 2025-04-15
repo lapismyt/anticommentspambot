@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c464aa44-d74a-4e3a-a686-f3ad54e18ae2" name="Changes" comment="Delete /strictness messages after 10 sec">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="c464aa44-d74a-4e3a-a686-f3ad54e18ae2" name="Changes" comment="Pass bots, i.e. @GroupHelpBot or @Carrot_ChatBot">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -124,7 +123,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744737691577</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Pass bots, i.e. @GroupHelpBot or @Carrot_ChatBot">
+      <option name="closed" value="true" />
+      <created>1744737800279</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1744737800279</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -134,6 +141,7 @@
     <MESSAGE value="Fixed /strictness restriction 2" />
     <MESSAGE value="Fixed /strictness restriction 4" />
     <MESSAGE value="Delete /strictness messages after 10 sec" />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete /strictness messages after 10 sec" />
+    <MESSAGE value="Pass bots, i.e. @GroupHelpBot or @Carrot_ChatBot" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pass bots, i.e. @GroupHelpBot or @Carrot_ChatBot" />
   </component>
 </project>
