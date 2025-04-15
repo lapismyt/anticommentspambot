@@ -106,12 +106,14 @@ async def strictness_command(message: Message):
         await message.reply('Правильное использование: /strictness <10-100>.')
         return
     if message.sender_chat is not None and message.sender_chat.id != message.chat.id:
-        member = await bot.get_chat_member(message.chat.id, message.from_user.id)
-        if member.status != ChatMemberStatus.ADMINISTRATOR or not member.can_delete_messages:
-            await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
-            return
-        logger.info(f'Admin: {member.status}')
-        logger.info(f'Can delete messages: {member.can_delete_messages}')
+        await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
+        return
+    member = await bot.get_chat_member(message.chat.id, message.from_user.id)
+    if member.status != ChatMemberStatus.ADMINISTRATOR or not member.can_delete_messages:
+        await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
+        return
+    logger.info(f'Admin: {member.status}')
+    logger.info(f'Can delete messages: {member.can_delete_messages}')
     await set_strictness_level(message.chat.id, strictness_level)
     await message.reply(f'Строгость в чате установлена на {strictness_level}.')
 
