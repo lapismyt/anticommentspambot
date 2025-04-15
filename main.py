@@ -4,6 +4,7 @@ import re
 from datetime import datetime
 
 from aiogram import Bot, Dispatcher, F
+from aiogram.enums import ChatMemberStatus
 from aiogram.types import Message, ChatMemberUpdated, ChatMemberAdministrator
 from aiogram.filters import Command
 
@@ -106,7 +107,7 @@ async def strictness_command(message: Message):
         return
     if message.sender_chat is not None and message.sender_chat.id != message.chat.id:
         member = await bot.get_chat_member(message.chat.id, message.from_user.id)
-        if type(member) is not ChatMemberAdministrator or not member.can_delete_messages:
+        if member.status != ChatMemberStatus.ADMINISTRATOR or not member.can_delete_messages:
             await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
             return
     await set_strictness_level(message.chat.id, strictness_level)
