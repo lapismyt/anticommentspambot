@@ -137,6 +137,8 @@ async def text_message_handler(message: Message):
         return
     await add_chat(message.chat.id)
     strictness_level = await get_strictness_level(message.chat.id)
+    if message.from_user.is_bot:
+        return
     if message.reply_to_message is None:
         return
     if not message.reply_to_message.is_automatic_forward:
