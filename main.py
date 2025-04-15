@@ -107,6 +107,7 @@ async def strictness_command(message: Message):
         return
     if message.sender_chat is not None and message.sender_chat.id != message.chat.id:
         await message.reply('Это может настраивать только админ с правами на удаление сообщений.')
+        logger.info(f'Sender chat: {message.sender_chat.id}')
         return
     member = await bot.get_chat_member(message.chat.id, message.from_user.id)
     if member.status != ChatMemberStatus.ADMINISTRATOR or not member.can_delete_messages:
